@@ -52,7 +52,7 @@ fjudith/glpi
 4. Click on _Install_.
 5. Review the requirement check-list, then click _Continue_.
 6. Full-fill the following fields:
-* **SQL server (MariaDB or MySQL)**: mysql
+* **SQL server (MariaDB or MySQL)**: mariadb
 * **Database user**: glpi
 * **Database password**: V3rY1ns3cur3P4ssw0rd
 7. Then click _Continue_.

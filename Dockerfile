@@ -4,9 +4,11 @@ MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
 ENV GLPI_VERSION=9.1.1
 ENV GLPI_URL=https://github.com/glpi-project/glpi/releases/download/$GLPI_VERSION/glpi-$GLPI_VERSION.tgz
+ENV TERM=xterm
 
 RUN apt-get update -y
 RUN apt-get install -y \
+	bzip2 \
 	wget \
 	nano
 
@@ -21,7 +23,7 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-# Download & Install needed php extensions: ldap, imap, zlib, gd
+# Download & Install needed php extensions: ldap, imap, zlib, gd, soap
 RUN apt-get install -y php5-ldap libldap2-dev && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
     docker-php-ext-install ldap
@@ -46,6 +48,9 @@ RUN docker-php-ext-install pdo_mysql
 
 RUN apt-get -y install re2c libmcrypt-dev && \
     docker-php-ext-install mcrypt
+
+RUN apt-get -y install php5-soap && \
+	docker-php-ext-install mcrypt
 
 # Download & Install GLPI
 RUN cd /var/www/html && \
