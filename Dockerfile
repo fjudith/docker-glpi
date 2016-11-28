@@ -49,7 +49,7 @@ RUN docker-php-ext-install pdo_mysql
 RUN apt-get -y install re2c libmcrypt-dev && \
     docker-php-ext-install mcrypt
 
-RUN apt-get -y install php-soap && \
+RUN apt-get -y install php-soap libxml2-dev && \
 	docker-php-ext-install soap
 
 # Download & Install GLPI
