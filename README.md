@@ -40,7 +40,7 @@ docker run --name='files' -d \
 --restart=always \
 -p 32706:80 \
 -v glpi-files:/var/www/html/files \
---links glpi-md:mariadb \
+--links glpi-md:mysql \
 fjudith/glpi
 ```
 
@@ -52,7 +52,7 @@ fjudith/glpi
 4. Click on _Install_.
 5. Review the requirement check-list, then click _Continue_.
 6. Full-fill the following fields:
-* **SQL server (MariaDB or MySQL)**: mariadb
+* **SQL server (MariaDB or MySQL)**: mysql
 * **Database user**: glpi
 * **Database password**: V3rY1ns3cur3P4ssw0rd
 7. Then click _Continue_.
@@ -87,9 +87,9 @@ glpi:
   ports:
     - "32706:80"
   volumes:
-    - limesurvey-upload:/var/www/html/upload
+    - glpi-files:/var/www/html/files
   links:
-    - limesurvey-md:mariadb
+    - glpi-md:mysql
 ```
 
 And run:
