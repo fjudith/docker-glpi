@@ -50,7 +50,7 @@ RUN apt-get -y install re2c libmcrypt-dev && \
     docker-php-ext-install mcrypt
 
 RUN apt-get -y install php5-soap && \
-	docker-php-ext-install mcrypt
+	docker-php-ext-install soap
 
 # Download & Install GLPI
 RUN cd /var/www/html && \
