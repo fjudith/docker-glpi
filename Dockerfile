@@ -8,6 +8,7 @@ ENV TERM=xterm
 
 RUN apt-get update -y
 RUN apt-get install -y \
+	cront \
 	bzip2 \
 	wget \
 	nano
