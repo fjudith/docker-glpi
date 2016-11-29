@@ -52,6 +52,9 @@ RUN apt-get -y install re2c libmcrypt-dev && \
 RUN apt-get -y install php-soap libxml2-dev && \
 	docker-php-ext-install soap
 
+RUN apt-get -y install php5-xmlrpc libxslt-dev && \
+	docker-php-ext-install xmlrpc xsl
+
 # Download & Install GLPI
 RUN cd /var/www/html && \
 	wget ${GLPI_URL} && \
