@@ -1,7 +1,6 @@
 # Supported tags and respective Dockerfile links
 
-[`9.1.3`, `latest`](https://github.com/fjudith/docker-glpi/tree/9.1.3)
-[`9.1.2`](https://github.com/fjudith/docker-glpi/tree/9.1.2)
+[`9.1.2`, latest](https://github.com/fjudith/docker-glpi/tree/9.1.2)
 [`9.1.1`](https://github.com/fjudith/docker-glpi/tree/9.1.1)
 
 
