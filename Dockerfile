@@ -2,13 +2,14 @@ FROM php:5-apache
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
-ENV GLPI_VERSION=9.1.1
+ENV GLPI_VERSION=9.1.2
 ENV GLPI_URL=https://github.com/glpi-project/glpi/releases/download/$GLPI_VERSION/glpi-$GLPI_VERSION.tgz
 ENV TERM=xterm
 
 RUN apt-get update -y
 RUN apt-get install -y \
 	cron \
+	#git \
 	bzip2 \
 	wget \
 	nano

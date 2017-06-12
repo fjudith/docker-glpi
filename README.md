@@ -1,3 +1,10 @@
+# Supported tags and respective Dockerfile links
+
+[`9.1.3`, `latest`](https://github.com/fjudith/docker-glpi/tree/9.1.3)
+[`9.1.2`](https://github.com/fjudith/docker-glpi/tree/9.1.2)
+[`9.1.1`](https://github.com/fjudith/docker-glpi/tree/9.1.1)
+
+
 # Introduction
 
 GLPI (formely Gestion Libre de Parc Infortique) is the most free & open source IT asset and service management tool available on the web.
@@ -88,6 +95,7 @@ glpi:
     - "32706:80"
   volumes:
     - glpi-files:/var/www/html/files
+    - glpi-plugins:/var/www/html/plugins
   links:
     - glpi-md:mysql
 ```
