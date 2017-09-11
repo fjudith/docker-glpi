@@ -14,17 +14,6 @@ RUN apt-get install -y \
 	wget \
 	nano
 
-# set recommended PHP.ini settings
-# see https://secure.php.net/manual/en/opcache.installation.php
-RUN { \
-		echo 'opcache.memory_consumption=128'; \
-		echo 'opcache.interned_strings_buffer=8'; \
-		echo 'opcache.max_accelerated_files=4000'; \
-		echo 'opcache.revalidate_freq=2'; \
-		echo 'opcache.fast_shutdown=1'; \
-		echo 'opcache.enable_cli=1'; \
-	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
-
 # Download & Install needed php extensions: ldap, imap, zlib, gd, soap
 RUN apt-get install -y php5-ldap libldap2-dev && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
@@ -56,6 +45,27 @@ RUN apt-get -y install php-soap libxml2-dev && \
 
 RUN apt-get -y install php5-xmlrpc libxslt-dev && \
 	docker-php-ext-install xmlrpc xsl
+
+RUN apt-get -y install php5-xmlrpc libxslt-dev && \
+	docker-php-ext-install xmlrpc xsl
+
+RUN pecl install APCu-4.0.11 \
+	&& docker-php-ext-enable apcu
+
+# set recommended PHP.ini settings
+# see https://secure.php.net/manual/en/opcache.installation.php
+RUN docker-php-ext-install opcache && \
+	{ \
+		echo 'opcache.memory_consumption=128'; \
+		echo 'opcache.interned_strings_buffer=8'; \
+		echo 'opcache.max_accelerated_files=4000'; \
+		echo 'opcache.revalidate_freq=2'; \
+		echo 'opcache.fast_shutdown=1'; \
+		echo 'opcache.enable_cli=1'; \
+	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
+
+
+
 
 # Download & Install GLPI
 RUN cd /var/www/html && \
