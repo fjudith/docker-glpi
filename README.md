@@ -1,6 +1,7 @@
 # Supported tags and respective Dockerfile links
 
-[`9.1.5`, latest](https://github.com/fjudith/docker-glpi/tree/9.1.5)
+[`9.2.1`, latest](https://github.com/fjudith/docker-glpi/tree/9.2.1)
+[`9.1.5`](https://github.com/fjudith/docker-glpi/tree/9.1.5)
 [`9.1.3`](https://github.com/fjudith/docker-glpi/tree/9.1.3)
 [`9.1.2`](https://github.com/fjudith/docker-glpi/tree/9.1.2)
 [`9.1.1`](https://github.com/fjudith/docker-glpi/tree/9.1.1)
@@ -76,7 +77,7 @@ You can use docker compose to automate the above command if you create a file ca
 ```yaml
 glpi-md:
   image: mariadb
-  restart: always
+  restart: on-failure
   ports:
     - "32806:3306"
   environment:
@@ -91,7 +92,7 @@ glpi-md:
 
 glpi:
   image: fjudith/glpi
-  restart: always
+  restart: on-failure
   ports:
     - "32706:80"
   volumes:
