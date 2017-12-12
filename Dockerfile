@@ -80,7 +80,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN  chmod +x /docker-entrypoint.sh
 
 # Write permissions on "files" directory
-RUN  chmod -R 666 //var/www/html/files
+RUN  chmod -R 777 //var/www/html/files
 
 WORKDIR /var/www/html
 
