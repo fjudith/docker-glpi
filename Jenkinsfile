@@ -67,7 +67,7 @@ pipeline {
                     agent { label 'docker' }
                     steps {
                         sleep 20
-                        sh "docker run --rm --network glpi-mono-${BUILD_NUMBER} blitznote/debootstrap-amd64:17.04 bash -c 'curl -i -X GET http://${DOCKER_GLPI}:80'"
+                        sh "docker run --rm --network glpi-mono-${BUILD_NUMBER} blitznote/debootstrap-amd64:17.04 bash -c 'curl -iL -X GET http://${DOCKER_GLPI}:80'"
                     }
                     post {
                         always {
