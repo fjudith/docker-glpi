@@ -76,7 +76,13 @@ RUN cd /var/www/html && \
 RUN chown -R www-data:www-data /var/www/html/*
 RUN chown www-data:www-data /var/lib/php5
 
+# Copy docker-entrypoint
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN  chmod +x /docker-entrypoint.sh
+
 WORKDIR /var/www/html
 
 EXPOSE 80
+
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD ["apache2-foreground"]
