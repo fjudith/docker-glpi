@@ -15,6 +15,9 @@ It supports various languages, provides a configuration management database for 
 
 GLPI can leverage LDAP protocol to manage the access and supports IMAP protocol to let end-users to create issues via email.
 
+# Roadmap
+
+* [x] Implement Crontab for GPLI Scheduler
 
  # Description
 The Dockerfile builds from "php:5-apache (see https://hub.docker.com/_/php/)
@@ -111,3 +114,4 @@ docker-compose up -d
 # References
 
 * http://glpi-project.org/spip.php?lang=en
+* http://fusioninventory.org/documentation/fi4g/cron.html
