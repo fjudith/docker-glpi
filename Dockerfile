@@ -79,6 +79,9 @@ RUN chown www-data:www-data /var/lib/php5
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN  chmod +x /docker-entrypoint.sh
 
+# Write permissions on "files" directory
+RUN  chmod -R 664 //var/www/html/files
+
 WORKDIR /var/www/html
 
 EXPOSE 80
