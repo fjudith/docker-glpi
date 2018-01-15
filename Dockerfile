@@ -83,11 +83,11 @@ RUN docker-php-ext-install opcache && \
 # Download & Install GLPI
 RUN cd /var/www/html && \
 	wget ${GLPI_URL} && \
-	tar --strip-components=1 -xvf glpi-${GLPI_VERSION}.tgz
+	tar --strip-components=1 -xvf glpi-${GLPI_VERSION}.tgz && \
+	rm -f glpi-${GLPI_VERSION}.tgz
 
 # Change owner for security reasons
 RUN chown -R www-data:www-data /var/www/html/*
-# RUN chown www-data:www-data /var/lib/php7.2
 
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /docker-entrypoint.sh
