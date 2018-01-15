@@ -1,4 +1,4 @@
-FROM php:5-apache
+FROM php:7.2-apache
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
@@ -6,8 +6,8 @@ ENV GLPI_VERSION=9.2.1
 ENV GLPI_URL=https://github.com/glpi-project/glpi/releases/download/$GLPI_VERSION/glpi-$GLPI_VERSION.tgz
 ENV TERM=xterm
 
-RUN apt-get update -y
-RUN apt-get install -y \
+RUN apt-get update --no-install-recommends -yqq && \
+	apt-get install --no-install-recommends -yqq \
 	cron \
 	bzip2 \
 	wget \
@@ -20,7 +20,7 @@ RUN apt-get install --no-install-recommends -y libldap2-dev && \
 
 RUN a2enmod rewrite expires
 
-RUN apt-get install -y php5-imap libssl-dev libc-client2007e-dev libkrb5-dev && \
+RUN apt-get install -y php7.2-imap libssl-dev libc-client2007e-dev libkrb5-dev && \
     docker-php-ext-configure imap --with-imap-ssl --with-kerberos && \
     docker-php-ext-install imap
 
@@ -39,13 +39,13 @@ RUN docker-php-ext-install pdo_mysql
 RUN apt-get -y install re2c libmcrypt-dev && \
     docker-php-ext-install mcrypt
 
-RUN apt-get -y install php-soap libxml2-dev && \
+RUN apt-get -y install php7.2-soap libxml2-dev && \
 	docker-php-ext-install soap
 
-RUN apt-get -y install php5-xmlrpc libxslt-dev && \
+RUN apt-get -y install php7.2-xmlrpc libxslt-dev && \
 	docker-php-ext-install xmlrpc xsl
 
-RUN apt-get -y install php5-xmlrpc libxslt-dev && \
+RUN apt-get -y install php7.2-xmlrpc libxslt-dev && \
 	docker-php-ext-install xmlrpc xsl
 
 RUN pecl install APCu-4.0.11 \
@@ -73,7 +73,7 @@ RUN cd /var/www/html && \
 
 # Change owner for security reasons
 RUN chown -R www-data:www-data /var/www/html/*
-RUN chown www-data:www-data /var/lib/php5
+RUN chown www-data:www-data /var/lib/php7.2
 
 # Copy docker-entrypoint
 COPY docker-entrypoint.sh /docker-entrypoint.sh
