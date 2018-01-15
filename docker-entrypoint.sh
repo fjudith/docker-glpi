@@ -1,5 +1,13 @@
 #!/bin/bash
 
+TZ=${TZ:-Etc/UTC}
+
+echo --------------------------------------------------
+echo "Setting up Timzone: \"${TZ}\""
+echo --------------------------------------------------
+echo $TZ | tee /etc/timezone
+dpkg-reconfigure --frontend noninteractive tzdata
+
 set -ex
 
 CRON_TIMING=${CRON_TIMING:-'* * * * *'}
