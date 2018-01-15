@@ -5,7 +5,7 @@ volumes:
   glpi-plugins:
 
 services:
-  glpi-md:
+  mariadb:
     image: amd64/mariadb:5.5
     environment:
       MYSQL_DATABASE: glpi
@@ -23,6 +23,6 @@ services:
     - glpi-files:/var/www/html/files
     - glpi-plugins:/var/www/html/plugins
     links:
-    - glpi-md:mysql
+    - mariadb:mysql
     ports:
     - 32706:80/tcp
