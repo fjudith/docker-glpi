@@ -6,6 +6,8 @@ ENV GLPI_VERSION=9.2.1
 ENV GLPI_URL=https://github.com/glpi-project/glpi/releases/download/$GLPI_VERSION/glpi-$GLPI_VERSION.tgz
 ENV TERM=xterm
 
+RUN mkdir -p /usr/src/php/ext/
+
 RUN apt-get update --no-install-recommends -yqq && \
 	apt-get install --no-install-recommends -yqq \
 	cron \
@@ -20,11 +22,11 @@ RUN apt-get install --no-install-recommends -y libldap2-dev && \
 
 RUN a2enmod rewrite expires
 
-RUN apt-get install -y php7.2-imap libssl-dev libc-client2007e-dev libkrb5-dev && \
+RUN apt-get install -y libssl-dev libc-client2007e-dev libkrb5-dev && \
     docker-php-ext-configure imap --with-imap-ssl --with-kerberos && \
     docker-php-ext-install imap
 
-RUN apt-get install -y libpng12-dev libjpeg-dev && \
+RUN apt-get install -y libpng-dev libjpeg-dev && \
     docker-php-ext-configure gd --with-jpeg-dir=/usr/lib && \
     docker-php-ext-install gd
 
@@ -36,20 +38,24 @@ RUN docker-php-ext-install mysqli
 
 RUN docker-php-ext-install pdo_mysql
 
-RUN apt-get -y install re2c libmcrypt-dev && \
-    docker-php-ext-install mcrypt
+RUN apt-get install -y re2c libmcrypt-dev libmcrypt4 libmcrypt-dev && \
+    curl -o mcrypt.tgz -SL http://pecl.php.net/get/mcrypt-1.0.1.tgz && \
+        tar -xf mcrypt.tgz -C /usr/src/php/ext/ && \
+        rm mcrypt.tgz && \
+        mv /usr/src/php/ext/mcrypt-1.0.1 /usr/src/php/ext/mcrypt && \
+		docker-php-ext-install mcrypt
 
-RUN apt-get -y install php7.2-soap libxml2-dev && \
+RUN apt-get -y install libxml2-dev && \
 	docker-php-ext-install soap
 
-RUN apt-get -y install php7.2-xmlrpc libxslt-dev && \
+RUN apt-get -y install libxslt-dev && \
 	docker-php-ext-install xmlrpc xsl
 
-RUN apt-get -y install php7.2-xmlrpc libxslt-dev && \
-	docker-php-ext-install xmlrpc xsl
-
-RUN pecl install APCu-4.0.11 \
-	&& docker-php-ext-enable apcu
+RUN curl -o apcu.tgz -SL http://pecl.php.net/get/apcu-5.1.9.tgz && \
+	tar -xf apcu.tgz -C /usr/src/php/ext/ && \
+	rm apcu.tgz && \
+	mv /usr/src/php/ext/apcu-5.1.9 /usr/src/php/ext/apcu && \
+	docker-php-ext-install apcu
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
@@ -62,9 +68,6 @@ RUN docker-php-ext-install opcache && \
 		echo 'opcache.fast_shutdown=1'; \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
-
-
-
 
 # Download & Install GLPI
 RUN cd /var/www/html && \

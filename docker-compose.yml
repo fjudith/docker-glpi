@@ -1,0 +1,28 @@
+version: '2'
+volumes:
+  glpi-db:
+  glpi-files:
+  glpi-plugins:
+
+services:
+  glpi-md:
+    image: amd64/mariadb:5.5
+    environment:
+      MYSQL_DATABASE: glpi
+      MYSQL_PASSWORD: V3ry1nS3cur3P4ssW0rd
+      MYSQL_ROOT_PASSWORD: V3ry1nS3cur34ls0
+      MYSQL_USER: glpi
+    volumes:
+    - glpi-db:/var/lib/mysql
+    ports:
+    - 32806:3306/tcp
+  glpi:
+    build: ./
+    image: fjudith/glpi:9.2.1-apache
+    volumes:
+    - glpi-files:/var/www/html/files
+    - glpi-plugins:/var/www/html/plugins
+    links:
+    - glpi-md:mysql
+    ports:
+    - 32706:80/tcp

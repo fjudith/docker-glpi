@@ -78,31 +78,34 @@ fjudith/glpi
 You can use docker compose to automate the above command if you create a file called docker-compose.yml and put in there the following:
 
 ```yaml
-glpi-md:
-  image: mariadb
-  restart: on-failure
-  ports:
-    - "32806:3306"
-  environment:
-    MYSQL_DATABASE: glpi
-    MYSQL_ROOT_PASSWORD: V3rY1ns3cur3P4ssw0rd
-    MYSQL_USER: glpi
-    MYSQL_PASSWORD: V3rY1ns3cur3P4ssw0rd
-  volumes:
-  - glpi-db:/var/lib/mysql
-  - glpi-dblog:/var/log/mysql
-  - glpi-dbetc:/etc/mysql
+version: '2'
+volumes:
+  glpi-db:
+  glpi-files:
+  glpi-plugins:
 
-glpi:
-  image: fjudith/glpi
-  restart: on-failure
-  ports:
-    - "32706:80"
-  volumes:
+services:
+  glpi-md:
+    image: amd64/mariadb:5.5
+    environment:
+      MYSQL_DATABASE: glpi
+      MYSQL_PASSWORD: V3ry1nS3cur3P4ssW0rd
+      MYSQL_ROOT_PASSWORD: V3ry1nS3cur34ls0
+      MYSQL_USER: glpi
+    volumes:
+    - glpi-db:/var/lib/mysql
+    ports:
+    - 32806:3306/tcp
+  glpi:
+    build: ./
+    image: fjudith/glpi:9.2.1-apache
+    volumes:
     - glpi-files:/var/www/html/files
     - glpi-plugins:/var/www/html/plugins
-  links:
+    links:
     - glpi-md:mysql
+    ports:
+    - 32706:80/tcp
 ```
 
 And run:
