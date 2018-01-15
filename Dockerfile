@@ -14,9 +14,9 @@ RUN apt-get install -y \
 	nano
 
 # Download & Install needed php extensions: ldap, imap, zlib, gd, soap
-RUN apt-get install -y php5-ldap libldap2-dev && \
+RUN apt-get install --no-install-recommends -y libldap2-dev && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
-    docker-php-ext-install ldap
+	docker-php-ext-install ldap
 
 RUN a2enmod rewrite expires
 
