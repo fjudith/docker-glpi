@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM amd64/php:7.2-apache
 
 MAINTAINER Florian JUDITH <florian.judith.b@gmail.com>
 
